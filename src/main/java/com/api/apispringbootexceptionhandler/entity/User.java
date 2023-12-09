@@ -12,14 +12,14 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
-    private String fastName;
+    private String lastName;
 
     @Column(name = "email")
     private String email;
@@ -27,10 +27,10 @@ public class User {
     public User() {
     }
 
-    public User(long id, String firstName, String fastName, String email) {
+    public User(long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
-        this.fastName = fastName;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -50,12 +50,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getFastName() {
-        return fastName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setFastName(String fastName) {
-        this.fastName = fastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
