@@ -17,6 +17,10 @@ import com.api.apispringbootexceptionhandler.entity.User;
 import com.api.apispringbootexceptionhandler.exceptions.ResourceNotFoundException;
 import com.api.apispringbootexceptionhandler.repository.UserRepository;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -32,20 +36,20 @@ public class UserController {
 
     // get user by id - localhost:8080/api/users/search/{id}
     @GetMapping("/search/{id}")
-    public User getUserById(@PathVariable(value = "id") long userId) {
+    public User getUserById(@PathVariable(value = "id") @NotNull @Positive long userId) {
         return this.userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id :: " + userId));
     }
 
     // create user - localhost:8080/api/users/create
     @PostMapping("/create")
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody @Valid User user) {
         return this.userRepository.save(user);
     }
 
     // update user - localhost:8080/api/users/replace/{id}
     @PutMapping("/replace/{id}")
-    public User updateUser(@RequestBody User user, @PathVariable("id") long userId) {
+    public User updateUser(@RequestBody @Valid User user, @PathVariable("id") @NotNull @Positive long userId) {
 
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id :: " + userId));
@@ -59,7 +63,7 @@ public class UserController {
 
     // delete user by id - localhost:8080/api/users/delete/{id}
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable("id") long userId) {
+    public ResponseEntity<User> deleteUser(@PathVariable("id") @NotNull @Positive long userId) {
 
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id :: " + userId));
